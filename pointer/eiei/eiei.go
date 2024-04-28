@@ -1,3 +1,3 @@
 package eiei
 
-const Hee = 7
+const Foo = 7
