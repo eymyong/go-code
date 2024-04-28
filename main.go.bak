@@ -1,0 +1,51 @@
+package main
+
+import "fmt"
+
+type person struct {
+	name     string
+	sex      string
+	age      int
+	children []person
+}
+
+func (p person) fuck(other person) person {
+	if p.sex != "male" {
+		panic("only male can fuck!")
+	}
+
+	child := person{
+		name: childName(p.name, other.name),
+		age:  0,
+	}
+
+	p.children = append(p.children, child)
+	other.children = append(other.children, child)
+
+	return child
+}
+
+func childName(dadName, momName string) string {
+	return "son-of " + dadName + "and " + momName
+}
+
+type circle struct {
+	r float64
+}
+
+func main() {
+	dad := person{name: "dad", sex: "male", age: 19}
+	mom := person{name: "mom", age: 12}
+
+	fmt.Println("before")
+	fmt.Println("dad", dad)
+	fmt.Println("mom", mom)
+
+	fmt.Println("fuck time!")
+	child := dad.fuck(mom)
+
+	fmt.Println("after")
+	fmt.Println("dad", dad)
+	fmt.Println("mom", mom)
+	fmt.Println("child", child)
+}
