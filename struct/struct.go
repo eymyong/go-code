@@ -1,9 +1,15 @@
-package main
+package struck
 
 import (
 	"fmt"
 	"math"
 )
+
+type person struct {
+	name string
+	sex  string
+	age  int
+}
 
 var personList = []person{
 	person{

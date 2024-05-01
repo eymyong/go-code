@@ -1,12 +1,12 @@
-package main
+package struck
 
 import "fmt"
 
-// type person struct {
-// 	name string
-// 	sex  string
-// 	age  int
-// }
+type Person struct {
+	name string
+	sex  string
+	age  int
+}
 
 type circle struct {
 	r float64

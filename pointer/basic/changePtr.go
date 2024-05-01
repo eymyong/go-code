@@ -19,28 +19,36 @@ func basicMain() {
 
 }
 
-func swapHard(a **string, b **string) { // สลับ value โดยที่ ที่อยู่เดิม || วิธีคิด
-	fmt.Println("before a:", **a)
-	fmt.Println("before &a:", a)
-	fmt.Println("before b:", **b)
-	fmt.Println("before &b:", b)
+func swapHard(a **string, b **string) { // สลับ value โดยที่ ที่อยู่เดิม || วิธีคิดคือเราจะสลับvalue ก็ต้องเข้าถึงvalueให้ได้ก่อน
+	fmt.Println("a ก่อน", a)        //&a
+	fmt.Println("a value ก่อน", *a) // value a
+	fmt.Println("b ก่อน", b)        //&a
+	fmt.Println("b value ก่อน", *b)
 	fmt.Println("====")
+	//newA := a
+	newValueA := *b   // สร้างตัวแปรใหม่ = value ของ b ซึ่ง newValueA เป็น type *int
+	nnA := &newValueA // สร้างตัวแปรใหม่เป็น *newValueA ซึ่ง nnA เป็น type **int
+	newValueB := *a
+	nnB := &newValueB
 
-	vA := *b
-	vVA := &vA
-	vB := *a
-	vVB := &vB
+	*a = *nnA // value ของ a = value ของ *nnA // deref`*nnA` = *b
+	*b = *nnB
 
-	**a = **vVB
-	**b = **vVA
+	fmt.Println("a หลัง", a)
+	fmt.Println("a value หลัง", *a)
+	fmt.Println("b หลัง", b)
+	fmt.Println("b value หลัง", *b)
 
-	// fmt.Println(**b)
-	// fmt.Println(**vVA)
+	//in main//
+	// s := "mond"
+	// t := "art"
 
-	fmt.Println("after a:", **a)
-	fmt.Println("after &a:", a)
-	fmt.Println("after b:", **b)
-	fmt.Println("after &b:", b)
+	// ss := &s
+	// tt := &t
+
+	// swapHard(&ss, &tt)
+
+	//=============================================================//
 
 }
 

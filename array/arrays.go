@@ -1,4 +1,4 @@
-package main
+package array
 
 // CopySlice return a copy of |arr|.
 func CopySlice[T any](arr []T) []T {

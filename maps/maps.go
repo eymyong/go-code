@@ -41,9 +41,6 @@ func main() {
 		fmt.Println("en", en, "th", th, "ger", ger)
 	}
 
-	a := []string{"dog", "cat", "dog", "fish", "tiger", "dog"}
-	fmt.Println(unique(a))
-
 	p := new(Person)
 	s := `{"personNamesssssssss":"art","personAge":30}`
 	err := json.Unmarshal([]byte(s), p)
@@ -71,19 +68,22 @@ func count(arr []string) map[string]int {
 	return m
 }
 
-func unique(arr []string) []string {
+func uniqueArr(arr []string) []string {
 	result := []string{}
-	seen := map[string]bool{}
 
+foo:
 	for i := range arr {
-		s := arr[i]
+		v := arr[i]
 
-		if seen[s] {
-			continue
+		for j := range result {
+			r := result[j]
+
+			if v == r {
+				continue foo
+			}
 		}
 
-		seen[s] = true
-		result = append(result, s)
+		result = append(result, v)
 	}
 
 	return result
