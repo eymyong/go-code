@@ -2,46 +2,28 @@ package pointer
 
 import "fmt"
 
-// var a *string  //
-// var b string
-// s := "kuy" // สร้างตัวแปร 's' มีtypeเป็น string
-// a = &s     // 'a' เป็น '*string' ชี้ไปที่ 's'
-// b = *a     // 'b' deref '*a'
-
-// c := &a  // **string
-// d := **c // d เป็น string deref a
-
-// e := &c
-// //f := ***e
-
-//fmt.Println("f ", f)
-
 type Kuy struct{}
 
 type player struct {
+	name  string
 	level int
 }
 
-func (p player) upLevel1() player {
-	p.level += 1 // copy
-	return p     // copy
-}
-
-func (p player) upLevel2() *player {
-	p.level += 1
-	return &p
-}
-
-func (p *player) upLevel3() player {
+func (p *player) upLevel1() player { // รับ `*player` || p.level += 1 || return person ที่ value ถูกเปลี่ยนจาก address ไม่ใช่การ Copy
 	p.level += 1
 	return *p
 }
 
-func (p *player) upLevel4() *player {
+func (p *player) upLevel2() *player { // รับ `*player` || p.level += 1 || return `*person`` ซึ่ง value จะออกไปเป็น &(value)
 	p.level += 1 // change p in main
 	pCopy := *p  // copy from p in main to p2
 	return &pCopy
 
+}
+func (p player) upLevel3() player { // เปลี่ยน value in func || แต่ไม่ได้เปลี่ยนที่ address ทำให้พอออกจาก func player.level ยังไม่ถูกเปลี่ยน
+
+	p.level += 1 // copy
+	return p     // copy
 }
 
 func changeValue(n *int) { // สร้าง'func' ที่รับ 'n *int' แล้วเปลี่ยนค่าโดยที่ไม่เปลี่ยนที่อยู่
@@ -56,36 +38,7 @@ func addOnePtr(i *int) int {
 	//i := 69
 	// addOnePtr(&i)  //ส่ง i เข้ามา
 	// fmt.Println(i) // 70
-	// fmt.Println(addOnePtr(&i)) //return ถ้าfuncไม่return จะPrintln ไม่ได้
-}
-
-func changeInt(i ***int) *int {
-	a := **i
-	return a
-}
-
-func swapValue(a *int, b *int) { // init 'func' ที่รับ '(a,b *int)' แล้วให้ value 'a' swap 'b' โดยที่ '&a,&b' ไม่เปลี่ยน
-	fmt.Println("pointer a:\t", a)
-	fmt.Println("value a:\t", *a)
-	fmt.Println("pointer b:\t", b)
-	fmt.Println("value b:\t", *b)
-	fmt.Println("=====")
-
-	va := *a // init 'va' to be value of 'a' >>สร้างตัวแปร 'va' มารับ value ของ 'a' (deref 'a' = '*a' = เอาvalueออกจาก 'a')
-	vb := *b // init 'vb' to be value of 'b'
-	*a = vb  // ให้ '*a'(value ของ a ที่อยู่เดิม)43 = 'vb'(value ใหม่)69
-	*b = va  // ให้ '*b'(69) = 'va'(43)
-
-	fmt.Println("swap pointer a:\t", a)
-	fmt.Println("swap value a:\t", *a)
-	fmt.Println("swap pointer b:\t", b)
-	fmt.Println("swap value b:\t", *b)
-
-	//=== in main ===
-	// yong := 69
-	// pak := 43
-	// swapValue(&yong, &pak)
-
+	// fmt.Println(addOnePtr(&i)) //return ถ้าfuncไม่ประกาศreturn จะPrintln ไม่ได้
 }
 
 func eym(hee **[]int) {
@@ -112,6 +65,8 @@ func kuy() {
 	// fmt.Println(h) //ใส่int 2 ต้องมี [hee,hee] , ใส่int 3 ต้องมี [hee,hee,hee] ,ถ้าintติด- [kuy]
 
 }
+
+//==========================================================================================//
 
 func addPtrMain() {
 	s := 8
@@ -144,37 +99,6 @@ func addPtrHard(a *int, b **int) int {
 	return vA + vVB
 }
 
-func swapHard(a **string, b **string) { // สลับ value โดยที่ ที่อยู่เดิม
-	fmt.Println("a ก่อน", a)        //&a
-	fmt.Println("a value ก่อน", *a) // value a
-	fmt.Println("b ก่อน", b)        //&a
-	fmt.Println("b value ก่อน", *b)
-	fmt.Println("====")
-	//newA := a
-	newValueA := *b   // สร้างตัวแปรใหม่ = value ของ b ซึ่ง newValueA เป็น type *int
-	nnA := &newValueA // สร้างตัวแปรใหม่เป็น *newValueA ซึ่ง nnA เป็น type **int
-	newValueB := *a
-	nnB := &newValueB
-
-	*a = *nnA // value ของ a = value ของ *nnA // deref`*nnA` = *b
-	*b = *nnB
-
-	fmt.Println("a หลัง", a)
-	fmt.Println("a value หลัง", *a)
-	fmt.Println("b หลัง", b)
-	fmt.Println("b value หลัง", *b)
-
-	//in main//
-	// s := "mond"
-	// t := "art"
-
-	// ss := &s
-	// tt := &t
-
-	// swapHard(&ss, &tt)
-
-}
-
 // j := 10      // 1
 // p1 := &j     // 2           // p1 = 0x7
 // p2 := foo(j) // 1           // p2 = 0x8
@@ -190,3 +114,43 @@ func swapHard(a **string, b **string) { // สลับ value โดยที่
 // var p3 *int // nil deref = panic
 // var p4 *int = new(int) // จะไปหาที่ว่าง แล้วสร้าง default int (0) แล้วเอาที่อยู่อันนั้นมาให้ ซึ่งถ้า deref `p4` = 0
 // fmt.Println(p3, p4, *p3)
+
+//================================================================================//
+
+func playerInMain() {
+	p1 := player{
+		name:  "yong",
+		level: 1,
+	}
+
+	fmt.Println("before level =", p1.level)
+	fmt.Println("before address p1 =", &p1.level)
+	fmt.Println("===")
+
+	//p1.upLevel1()
+	p2 := p1.upLevel2()
+	fmt.Println(*p2)
+
+	fmt.Println("after level =", p1.level)
+	fmt.Println("after address p1 =", &p1.level)
+
+}
+
+// array := []int{10, 20, 30, 40, 50}
+// b := 2
+
+// changeValue(array, b)
+// fmt.Println(array)
+
+// func changeValue(n []int, b int) {
+// // c := n
+
+// for i := 0; i < len(n); i++ {
+// 	n[i] = n[i] * b
+// }
+
+// }
+
+// func eym(a *[]int, b int) {
+// 	*a = append(*a, b)
+// }

@@ -12,6 +12,7 @@ type person struct {
 }
 
 func main() {
+
 	k1 := person{
 		name: "k1",
 		sex:  "m",
@@ -43,7 +44,3 @@ func main() {
 func (p *person) newName(s string) {
 	p.name = s
 }
-
-// func newName(p *person, s string) {
-
-// }
